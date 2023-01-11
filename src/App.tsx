@@ -1,24 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { ReactNode } from 'react';
 import './App.css';
+
+//conventional props
+function Heading({ title }: { title: string; }) {
+  return (
+    <h1>{title}</h1>
+  )
+}
+
+function HeadingWithContent({ children }: { children: ReactNode; }) {
+  return (
+    <h1>{children}</h1>
+  )
+}
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Heading title={'hello there!!!'}></Heading>
+      <HeadingWithContent>Hi!!</HeadingWithContent>
     </div>
   );
 }
