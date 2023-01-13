@@ -1,25 +1,17 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useState } from 'react';
 import './App.css';
 import Header from './Components/Header'
-
-//conventional props
-function Heading({ title }: { title: string; }) {
-  return (
-    <h1>{title}</h1>
-  )
-}
-
-function HeadingWithContent({ children }: { children: ReactNode; }) {
-  return (
-    <h1>{children}</h1>
-  )
-}
+import UserLogin from './Components/UserLogin';
 
 function App() {
+  const [loggedInUsername, setLoggedInUsername] = useState('');
+  const [loggedInUserID, setLoggedInUserID] = useState(0);
+
+
   return (
     <div>
-      <Heading title={'hello there!!!'}></Heading>
-      <HeadingWithContent>Hi!!</HeadingWithContent>
+      <Header loggedInUsername={loggedInUsername} loggedInUserID={loggedInUserID} />
+      <UserLogin setLoggedInUsername={setLoggedInUsername} setLoggedInUserID={setLoggedInUserID} />
     </div>
   );
 }
