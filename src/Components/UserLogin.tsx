@@ -41,10 +41,11 @@ function UserLogin({ setLoggedInUserID, setLoggedInUsername }: UserLoginProps) {
 
     return (
         <div className="form-div">
+            <h4>Login:</h4>
             <form onSubmit={(event) => handleSubmit(event)}>
                 <Input type="text" placeholder="username" onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleUsername(event)} />
                 <Password placeholder="password" onChange={(event: React.ChangeEvent<HTMLInputElement>) => handlePassword(event)} />
-                <Button type="primary" htmlType="submit">BUTTON TEXT</Button>
+                <Button type="primary" htmlType="submit">SUBMIT</Button>
             </form>
         </div>
     )

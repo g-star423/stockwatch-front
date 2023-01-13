@@ -5,12 +5,12 @@ interface HeaderProps {
     loggedInUserID: number
 }
 
-function Header({ loggedInUsername }: HeaderProps) {
+function Header({ loggedInUsername, loggedInUserID }: HeaderProps) {
 
     return (
         <header>
             <h1>STOCKWATCH</h1>
-            {loggedInUsername === '' ? <p>Please Log in.</p> : <p>Welcome {loggedInUsername}</p>}
+            {loggedInUsername === '' ? <p>Please Log in.</p> : <p>Welcome {loggedInUsername}, User Number: {loggedInUserID}</p>}
         </header>
     )
 }
