@@ -3,6 +3,7 @@ import './App.css';
 import Header from './Components/Header'
 import UserLogin from './Components/UserLogin';
 import NewUser from './Components/NewUser';
+import Holdings from './Components/Holdings';
 
 function App() {
   const [loggedInUsername, setLoggedInUsername] = useState('');
@@ -14,6 +15,7 @@ function App() {
       <Header loggedInUsername={loggedInUsername} loggedInUserID={loggedInUserID} />
       <UserLogin setLoggedInUsername={setLoggedInUsername} setLoggedInUserID={setLoggedInUserID} />
       <NewUser setLoggedInUsername={setLoggedInUsername} setLoggedInUserID={setLoggedInUserID} />
+      <Holdings loggedInUserID={loggedInUserID} />
     </div>
   );
 }

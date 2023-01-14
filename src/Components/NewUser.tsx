@@ -1,6 +1,6 @@
 import { useState } from "react"
 import axios from "axios"
-import { Button, Input } from 'antd';
+import { Button, Form, Input } from 'antd';
 import Password from "antd/es/input/Password";
 
 interface NewUserProps {
@@ -54,9 +54,10 @@ function NewUser({ setLoggedInUserID, setLoggedInUsername }: NewUserProps) {
         <div className="form-div">
             <h4>New User</h4>
             <form onSubmit={(event) => handleSubmit(event)}>
-                <Input type="text" placeholder="username" onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleUsername(event)} />
-                <Password placeholder="password" onChange={(event: React.ChangeEvent<HTMLInputElement>) => handlePassword(event)} />
-                <Password placeholder="confirm password" onChange={(event: React.ChangeEvent<HTMLInputElement>) => handlePasswordCheck(event)} />
+                {/* <Form.Item label="Username" name='username' /> */}
+                <Input name="username" type="text" placeholder="username" onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleUsername(event)} />
+                <Input.Password placeholder="password" onChange={(event: React.ChangeEvent<HTMLInputElement>) => handlePassword(event)} />
+                <Input.Password placeholder="confirm password" onChange={(event: React.ChangeEvent<HTMLInputElement>) => handlePasswordCheck(event)} />
                 <Button type="primary" htmlType="submit">SUBMIT</Button>
                 {passwordsDontMatch ? <p>your passwords don't match</p> : null}
                 {usernameTaken ? <p>username is taken</p> : null}

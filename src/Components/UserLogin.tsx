@@ -12,6 +12,7 @@ interface UserLoginProps {
 function UserLogin({ setLoggedInUserID, setLoggedInUsername }: UserLoginProps) {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const [invalidLogin, setInvalidLogin] = useState(false)
 
     function handleUsername(event: React.ChangeEvent<HTMLInputElement>) {
         setUsername(event.target.value)
@@ -28,13 +29,17 @@ function UserLogin({ setLoggedInUserID, setLoggedInUsername }: UserLoginProps) {
                 'password': password
             }).then(
                 (response) => {
-                    console.log(response.data);
-                    setLoggedInUsername(response.data.email)
-                    setLoggedInUserID(response.data.id)
+                    if (response.data.email !== undefined) {
+                        setLoggedInUsername(response.data.email)
+                        setLoggedInUserID(response.data.id)
+                    } else {
+                        setInvalidLogin(true)
+                    }
                 }
             ).catch(
                 (error) => {
                     console.log(error);
+                    setInvalidLogin(true)
                 }
             )
     }
@@ -46,6 +51,7 @@ function UserLogin({ setLoggedInUserID, setLoggedInUsername }: UserLoginProps) {
                 <Input type="text" placeholder="username" onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleUsername(event)} />
                 <Password placeholder="password" onChange={(event: React.ChangeEvent<HTMLInputElement>) => handlePassword(event)} />
                 <Button type="primary" htmlType="submit">SUBMIT</Button>
+                {invalidLogin ? <p>invalid login</p> : null}
             </form>
         </div>
     )
