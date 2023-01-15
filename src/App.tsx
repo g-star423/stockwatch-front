@@ -4,6 +4,7 @@ import Header from './Components/Header'
 import UserLogin from './Components/UserLogin';
 import NewUser from './Components/NewUser';
 import Holdings from './Components/Holdings';
+import PlaidLinkComponent from './Components/Plaid';
 
 function App() {
   const [loggedInUsername, setLoggedInUsername] = useState('');
@@ -16,6 +17,7 @@ function App() {
       <UserLogin setLoggedInUsername={setLoggedInUsername} setLoggedInUserID={setLoggedInUserID} />
       <NewUser setLoggedInUsername={setLoggedInUsername} setLoggedInUserID={setLoggedInUserID} />
       <Holdings loggedInUserID={loggedInUserID} />
+      <PlaidLinkComponent />
     </div>
   );
 }

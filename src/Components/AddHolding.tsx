@@ -40,6 +40,7 @@ function AddHolding({ loggedInUserID, getUserHoldings }: AddHoldingProps) {
 
     function handleAddHolding(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault()
+        setIsModalOpen(false)
         axios.post('http://localhost:8000/api/holdings', {
             'stock_name': stockName,
             'stock_ticker': stockTicker,
@@ -63,9 +64,8 @@ function AddHolding({ loggedInUserID, getUserHoldings }: AddHoldingProps) {
             <Button type="primary" onClick={showModal}>
                 ADD HOLDING
             </Button>
-            <Modal title="Add New Holding" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} okText='DONE'>
+            <Modal destroyOnClose={true} title="Add New Holding" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} okText='DONE' footer={null}>
                 <div className='form-div'>
-                    <h4>Add Holding</h4>
                     <form onSubmit={(event) => handleAddHolding(event)}>
                         <Input type="text" placeholder="stock name" onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleStockName(event)} />
                         <Input type="text" placeholder="stock ticker" onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleStockTicker(event)} />

@@ -66,16 +66,31 @@ function EditHolding({ isModalOpen, setIsModalOpen, holdingEditing }: EditHoldin
         )
     }
 
+    function handleDelete() {
+        axios.delete('http://localhost:8000/api/holdings/' + holdingEditing?.id).then(
+            (response) => {
+                setIsModalOpen(false)
+                console.log("successfully deleted");
+
+            }
+        ).catch(
+            (error) => {
+                console.log(error);
+
+            }
+        )
+    }
+
     return (
         <>
             <Modal title="Edit Holding" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} okText='DONE'>
                 <div className='form-div'>
-                    <h4>Add Holding</h4>
                     <form onSubmit={(event) => handleEditHolding(event)}>
                         <Input type="text" value={stockName} onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleStockName(event)} />
                         <Input type="text" value={stockTicker} onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleStockTicker(event)} />
                         <Input type="number" value={stockShares} onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleStockShares(event)} />
                         <Button type='primary' htmlType='submit'>SUBMIT</Button>
+                        <Button type='primary' danger={true} onClick={handleDelete}>DELETE</Button>
                     </form>
                 </div>
             </Modal>
