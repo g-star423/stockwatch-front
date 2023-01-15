@@ -1,7 +1,9 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button, Table } from "antd"
 import axios from "axios"
 import AddHolding from "./AddHolding"
+import EditHolding from "./EditHolding"
+import { render } from "@testing-library/react"
 
 interface HoldingsProps {
     loggedInUserID: number
@@ -17,9 +19,19 @@ interface Holding {
 
 function Holdings({ loggedInUserID }: HoldingsProps) {
 
+    // from ant.design documentation
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const showEditModal = () => {
+        setIsModalOpen(true);
+    };
+    //end ant.design code
+
+
+    const [holdingEditing, setHoldingEditing] = useState<Holding | undefined>()
 
     const [dataSource, setDataSource] = useState<Holding[]>([])
-    const columns = [
+    const columns = [ // I would not use antd again purely because of this table design.
         {
             title: 'id',
             dataIndex: 'id',
@@ -39,6 +51,14 @@ function Holdings({ loggedInUserID }: HoldingsProps) {
             title: 'Number of Shares',
             dataIndex: 'number_of_shares',
             key: 'number_of_shares'
+        },
+        {
+            title: 'Edit',
+            dataIndex: 'id',
+            key: 'id',
+            render: (text: string, record: Holding, index: number) => (
+                <Button type="primary" key={record.id} onClick={() => { setHoldingEditing(record); showEditModal(); }}>EDIT HOLDING</Button>
+            )
         }
     ]
 
@@ -54,13 +74,18 @@ function Holdings({ loggedInUserID }: HoldingsProps) {
         )
     }
 
+    useEffect(() => {
+        getUserHoldings()
+    }, [isModalOpen])
+
     return (
         <>
             <div className="table-div">
                 <Button onClick={getUserHoldings}>Get data for logged in user</Button>
-                <Table<Holding> columns={columns} dataSource={dataSource} />
+                <Table<Holding> columns={columns} dataSource={dataSource} pagination={false} />
             </div>
-            <AddHolding loggedInUserID={loggedInUserID} />
+            <AddHolding loggedInUserID={loggedInUserID} getUserHoldings={getUserHoldings} />
+            <EditHolding isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} holdingEditing={holdingEditing} />
         </>
     )
 }

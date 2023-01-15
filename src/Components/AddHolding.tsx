@@ -4,9 +4,10 @@ import { Button, Input, Modal } from 'antd';
 
 interface AddHoldingProps {
     loggedInUserID: number
+    getUserHoldings: Function
 }
 
-function AddHolding({ loggedInUserID }: AddHoldingProps) {
+function AddHolding({ loggedInUserID, getUserHoldings }: AddHoldingProps) {
     // from ant.design documentation
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -47,6 +48,7 @@ function AddHolding({ loggedInUserID }: AddHoldingProps) {
         }).then(
             (response) => {
                 console.log(response.data);
+                getUserHoldings()
             }
         ).catch(
             (error) => {
@@ -61,7 +63,7 @@ function AddHolding({ loggedInUserID }: AddHoldingProps) {
             <Button type="primary" onClick={showModal}>
                 ADD HOLDING
             </Button>
-            <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} okText='DONE'>
+            <Modal title="Add New Holding" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} okText='DONE'>
                 <div className='form-div'>
                     <h4>Add Holding</h4>
                     <form onSubmit={(event) => handleAddHolding(event)}>
