@@ -9,6 +9,8 @@ const config: PlaidLinkOptions = {
     receivedRedirectUri: window.location.href,
 };
 
+const { open, exit, ready } = usePlaidLink(config);
+
 function PlaidLinkComponent() {
     return (
         <>
