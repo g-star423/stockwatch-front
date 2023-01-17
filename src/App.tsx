@@ -17,7 +17,7 @@ function App() {
       <UserLogin setLoggedInUsername={setLoggedInUsername} setLoggedInUserID={setLoggedInUserID} />
       <NewUser setLoggedInUsername={setLoggedInUsername} setLoggedInUserID={setLoggedInUserID} />
       <Holdings loggedInUserID={loggedInUserID} />
-      <PlaidLinkComponent />
+      <PlaidLinkComponent loggedInUserID={loggedInUserID} />
     </div>
   );
 }

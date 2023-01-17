@@ -3,13 +3,17 @@ import { useState } from "react";
 import { usePlaidLink, PlaidLinkOptions, PlaidLinkOnSuccess } from "react-plaid-link"
 import axios from "axios";
 
-interface plaidTokenResponse {
+interface PlaidTokenResponse {
     expiration: string,
     link_token: string,
     request_id: string,
 }
 
-function PlaidLinkComponent() {
+interface PlaidProps {
+    loggedInUserID: number
+}
+
+function PlaidLinkComponent({ loggedInUserID }: PlaidProps) {
     const [plaidLinkToken, setPlaidLinkToken] = useState<string | null>(null)
     const [public_token, setPublicToken] = useState<string | null>(null)
 
@@ -25,7 +29,7 @@ function PlaidLinkComponent() {
     };
     const request = {
         "token_status": "blank, requesting token",
-        "user_id": 1
+        "user_id": loggedInUserID
     }
     const { open, exit, ready } = usePlaidLink(config);
     function getToken() {
@@ -41,12 +45,29 @@ function PlaidLinkComponent() {
             }
         )
     }
+    function sendTokenForExchange() {
+        const exchangeRequest = {
+            "user_id": loggedInUserID,
+            "public_token": public_token
+        }
+        axios.post('http://localhost:8000/api/exchangetoken', exchangeRequest).then(
+            (response) => {
+                console.log("response from sending token for exchange" + response.data);
+
+            }
+        ).catch(
+            (error) => {
+                console.log(error);
+            }
+        )
+    }
 
     return (
         <>
             <div>
                 <Button onClick={() => getToken()}>GET TOKEN</Button>
                 <Button onClick={() => open()}>LINK PLAID ACCOUNT</Button>
+                <Button onClick={() => sendTokenForExchange()}>exchange token</Button>
                 <p>Here is the public token we received: {public_token}</p>
             </div>
         </>
