@@ -23,7 +23,7 @@ function UserLogin({ setLoggedInUserID, setLoggedInUsername }: UserLoginProps) {
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault()
         console.log(`Submitted form, username: ${username}, password: ${password}`);
-        axios.put('http://localhost:8000/api/useraccount/login',
+        axios.put('https://boiling-crag-00382.herokuapp.com/useraccount/login',
             {
                 'email': username,
                 'password': password

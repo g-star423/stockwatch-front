@@ -31,7 +31,7 @@ function NewUser({ setLoggedInUserID, setLoggedInUsername }: NewUserProps) {
         if (password != passwordCheck) {
             setPasswordsDontMatch(true)
         } else {
-            axios.post('http://localhost:8000/api/useraccount', {
+            axios.post('https://boiling-crag-00382.herokuapp.com/api/useraccount', {
                 'email': username,
                 'password': password
             }).then(

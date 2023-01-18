@@ -51,7 +51,7 @@ function EditHolding({ isModalOpen, setIsModalOpen, holdingEditing }: EditHoldin
     function handleEditHolding(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault()
         setIsModalOpen(false)
-        axios.put('http://localhost:8000/api/holdings/' + holdingEditing?.id, {
+        axios.put('https://boiling-crag-00382.herokuapp.com/api/holdings/' + holdingEditing?.id, {
             "stock_name": stockName,
             "stock_ticker": stockTicker,
             "number_of_shares": stockShares
@@ -67,7 +67,7 @@ function EditHolding({ isModalOpen, setIsModalOpen, holdingEditing }: EditHoldin
     }
 
     function handleDelete() {
-        axios.delete('http://localhost:8000/api/holdings/' + holdingEditing?.id).then(
+        axios.delete('https://boiling-crag-00382.herokuapp.com/api/holdings/' + holdingEditing?.id).then(
             (response) => {
                 setIsModalOpen(false)
                 console.log("successfully deleted");

@@ -33,7 +33,7 @@ function PlaidLinkComponent({ loggedInUserID }: PlaidProps) {
     }
     const { open, exit, ready } = usePlaidLink(config);
     function getToken() {
-        axios.post('http://localhost:8000/api/firsttoken', request).then(
+        axios.post('https://boiling-crag-00382.herokuapp.com/api/firsttoken', request).then(
             (response) => {
                 setPlaidLinkToken(response.data.link_token)
                 console.log(response.data.link_token)
@@ -50,7 +50,7 @@ function PlaidLinkComponent({ loggedInUserID }: PlaidProps) {
             "user_id": loggedInUserID,
             "public_token": public_token
         }
-        axios.post('http://localhost:8000/api/exchangetoken', exchangeRequest).then(
+        axios.post('https://boiling-crag-00382.herokuapp.com/exchangetoken', exchangeRequest).then(
             (response) => {
                 console.log("response from sending token for exchange" + response.data);
 
@@ -65,7 +65,7 @@ function PlaidLinkComponent({ loggedInUserID }: PlaidProps) {
         const updateRequest = {
             "user_id": loggedInUserID
         }
-        axios.post('http://localhost:8000/api/updateholdings', updateRequest).then(
+        axios.post('https://boiling-crag-00382.herokuapp.com/api/updateholdings', updateRequest).then(
             (response) => {
 
             }

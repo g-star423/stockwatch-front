@@ -63,7 +63,7 @@ function Holdings({ loggedInUserID }: HoldingsProps) {
     ]
 
     function getUserHoldings() {
-        axios.get('http://localhost:8000/api/userholdings/' + loggedInUserID).then(
+        axios.get('https://boiling-crag-00382.herokuapp.com/api/userholdings/' + loggedInUserID).then(
             (response) => {
                 setDataSource(response.data)
             }

@@ -41,7 +41,7 @@ function AddHolding({ loggedInUserID, getUserHoldings }: AddHoldingProps) {
     function handleAddHolding(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault()
         setIsModalOpen(false)
-        axios.post('http://localhost:8000/api/holdings', {
+        axios.post('https://boiling-crag-00382.herokuapp.com/api/holdings', {
             'stock_name': stockName,
             'stock_ticker': stockTicker,
             'number_of_shares': stockShares,
