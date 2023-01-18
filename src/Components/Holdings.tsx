@@ -6,7 +6,7 @@ import EditHolding from "./EditHolding"
 import { render } from "@testing-library/react"
 
 interface HoldingsProps {
-    loggedInUserID: number
+    loggedInUserID: number | undefined
 }
 
 interface Holding {
@@ -81,7 +81,7 @@ function Holdings({ loggedInUserID }: HoldingsProps) {
     return (
         <>
             <div className="table-div">
-                <Button onClick={getUserHoldings}>Get data for logged in user</Button>
+                <Button onClick={getUserHoldings}>REFRESH HOLDINGS</Button>
                 <Table<Holding> columns={columns} dataSource={dataSource} pagination={false} />
             </div>
             <AddHolding loggedInUserID={loggedInUserID} getUserHoldings={getUserHoldings} />

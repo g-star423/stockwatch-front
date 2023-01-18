@@ -1,5 +1,5 @@
 import { Button } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usePlaidLink, PlaidLinkOptions, PlaidLinkOnSuccess } from "react-plaid-link"
 import axios from "axios";
 
@@ -10,16 +10,18 @@ interface PlaidTokenResponse {
 }
 
 interface PlaidProps {
-    loggedInUserID: number
+    loggedInUserID: number | undefined
 }
 
 function PlaidLinkComponent({ loggedInUserID }: PlaidProps) {
     const [plaidLinkToken, setPlaidLinkToken] = useState<string | null>(null)
-    const [public_token, setPublicToken] = useState<string | null>(null)
+    const [publicToken, setPublicToken] = useState<string | null>(null)
+    const [plaidSuccess, setPlaidSuccess] = useState(false)
 
     const config: PlaidLinkOptions = {
         onSuccess: (public_token, metadata) => {
-            setPublicToken(public_token)
+            setPublicToken(publicToken)
+            sendTokenForExchange()
         },
         onExit: (err, metadata) => { },
         onEvent: (eventName, metadata) => { },
@@ -36,7 +38,6 @@ function PlaidLinkComponent({ loggedInUserID }: PlaidProps) {
         axios.post('https://boiling-crag-00382.herokuapp.com/api/firsttoken', request).then(
             (response) => {
                 setPlaidLinkToken(response.data.link_token)
-                console.log(response.data.link_token)
             }
         ).catch(
             (error) => {
@@ -45,15 +46,21 @@ function PlaidLinkComponent({ loggedInUserID }: PlaidProps) {
             }
         )
     }
+    useEffect(() => {
+        if (ready) {
+            open()
+        }
+    }, [ready, plaidLinkToken])
+
     function sendTokenForExchange() {
         const exchangeRequest = {
             "user_id": loggedInUserID,
-            "public_token": public_token
+            "public_token": publicToken
         }
         axios.post('https://boiling-crag-00382.herokuapp.com/api/exchangetoken', exchangeRequest).then(
             (response) => {
                 console.log("response from sending token for exchange" + response.data);
-
+                updateHoldings()
             }
         ).catch(
             (error) => {
@@ -61,7 +68,7 @@ function PlaidLinkComponent({ loggedInUserID }: PlaidProps) {
             }
         )
     }
-    function updateHoldings() {
+    function updateHoldings() { // this function asks the server to refresh the client's holdings, which deletes all old holdings and pulls in fresh holdings from plaid
         const updateRequest = {
             "user_id": loggedInUserID
         }
@@ -80,11 +87,12 @@ function PlaidLinkComponent({ loggedInUserID }: PlaidProps) {
     return (
         <>
             <div>
-                <Button onClick={() => getToken()}>GET TOKEN</Button>
-                <Button onClick={() => open()}>LINK PLAID ACCOUNT</Button>
-                <Button onClick={() => sendTokenForExchange()}>exchange token</Button>
-                <Button onClick={() => updateHoldings()}>UPDATE HOLDINGS</Button>
-                <p>Here is the public token we received: {public_token}</p>
+                <Button onClick={() => { getToken() }}>GET TOKEN</Button>
+                {/* <Button onClick={() => open()}>LINK PLAID ACCOUNT</Button> */}
+                {/* <Button onClick={() => sendTokenForExchange()}>exchange token</Button> */}
+                <Button onClick={() => updateHoldings()}>REFRESH HOLDINGS FROM PLAID</Button>
+                <p>Here is the public token we received: {publicToken}</p>
+                {plaidSuccess ? <p>Account connected! Please UPDATE HOLDINGS.</p> : null}
             </div>
         </>
     )

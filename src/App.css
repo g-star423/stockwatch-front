@@ -1,3 +1,7 @@
+body {
+  background-color: #dacab7;
+}
+
 .form-div {
   width: 90%;
   max-width: 400px;
@@ -11,4 +15,17 @@
   padding: 5px;
   margin-left: auto;
   margin-right: auto;
+}
+
+header img {
+  display: block;
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 400px;
+}
+
+header p {
+  text-align: end;
+  margin-right: 2em;
 }

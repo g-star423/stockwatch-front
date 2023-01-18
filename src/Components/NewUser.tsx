@@ -6,9 +6,10 @@ import Password from "antd/es/input/Password";
 interface NewUserProps {
     setLoggedInUsername: Function
     setLoggedInUserID: Function
+    setSignup: Function
 }
 
-function NewUser({ setLoggedInUserID, setLoggedInUsername }: NewUserProps) {
+function NewUser({ setLoggedInUserID, setLoggedInUsername, setSignup }: NewUserProps) {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [passwordCheck, setPasswordCheck] = useState('')
@@ -58,7 +59,7 @@ function NewUser({ setLoggedInUserID, setLoggedInUsername }: NewUserProps) {
                 <Input name="username" type="text" placeholder="username" onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleUsername(event)} />
                 <Input.Password placeholder="password" onChange={(event: React.ChangeEvent<HTMLInputElement>) => handlePassword(event)} />
                 <Input.Password placeholder="confirm password" onChange={(event: React.ChangeEvent<HTMLInputElement>) => handlePasswordCheck(event)} />
-                <Button type="primary" htmlType="submit">SUBMIT</Button>
+                <Button type="primary" htmlType="submit">SUBMIT</Button><Button onClick={() => setSignup(false)}>CANCEL</Button>
                 {passwordsDontMatch ? <p>your passwords don't match</p> : null}
                 {usernameTaken ? <p>username is taken</p> : null}
             </form>

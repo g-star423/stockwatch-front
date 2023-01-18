@@ -6,10 +6,11 @@ import Password from "antd/es/input/Password";
 interface UserLoginProps {
     setLoggedInUsername: Function
     setLoggedInUserID: Function
+    setLogin: Function
 }
 
 
-function UserLogin({ setLoggedInUserID, setLoggedInUsername }: UserLoginProps) {
+function UserLogin({ setLoggedInUserID, setLoggedInUsername, setLogin }: UserLoginProps) {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [invalidLogin, setInvalidLogin] = useState(false)
@@ -50,7 +51,7 @@ function UserLogin({ setLoggedInUserID, setLoggedInUsername }: UserLoginProps) {
             <form onSubmit={(event) => handleSubmit(event)}>
                 <Input type="text" placeholder="username" onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleUsername(event)} />
                 <Password placeholder="password" onChange={(event: React.ChangeEvent<HTMLInputElement>) => handlePassword(event)} />
-                <Button type="primary" htmlType="submit">SUBMIT</Button>
+                <Button type="primary" htmlType="submit">SUBMIT</Button><Button onClick={() => setLogin(false)}>CANCEL</Button>
                 {invalidLogin ? <p>invalid login</p> : null}
             </form>
         </div>

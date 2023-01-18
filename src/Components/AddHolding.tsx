@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Button, Input, Modal } from 'antd';
 
 interface AddHoldingProps {
-    loggedInUserID: number
+    loggedInUserID: number | undefined
     getUserHoldings: Function
 }
 

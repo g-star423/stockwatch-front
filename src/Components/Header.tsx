@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 
 interface HeaderProps {
-    loggedInUsername: string
-    loggedInUserID: number
+    loggedInUsername: string | undefined
+    loggedInUserID: number | undefined
 }
 
 function Header({ loggedInUsername, loggedInUserID }: HeaderProps) {
 
     return (
         <header>
-            <h1>STOCKWATCH</h1>
+            <img src="https://i.imgur.com/QdQ14Fg.png" />
             {loggedInUsername === '' ? <p>Please Log in.</p> : <p>Welcome {loggedInUsername}, User Number {loggedInUserID}</p>}
         </header>
     )
