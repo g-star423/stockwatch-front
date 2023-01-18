@@ -50,7 +50,7 @@ function PlaidLinkComponent({ loggedInUserID }: PlaidProps) {
             "user_id": loggedInUserID,
             "public_token": public_token
         }
-        axios.post('https://boiling-crag-00382.herokuapp.com/exchangetoken', exchangeRequest).then(
+        axios.post('https://boiling-crag-00382.herokuapp.com/api/exchangetoken', exchangeRequest).then(
             (response) => {
                 console.log("response from sending token for exchange" + response.data);
 
