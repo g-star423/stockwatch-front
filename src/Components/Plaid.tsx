@@ -61,6 +61,21 @@ function PlaidLinkComponent({ loggedInUserID }: PlaidProps) {
             }
         )
     }
+    function updateHoldings() {
+        const updateRequest = {
+            "user_id": loggedInUserID
+        }
+        axios.post('http://localhost:8000/api/updateholdings', updateRequest).then(
+            (response) => {
+
+            }
+        ).catch(
+            (error) => {
+                console.log(error);
+
+            }
+        )
+    }
 
     return (
         <>
@@ -68,6 +83,7 @@ function PlaidLinkComponent({ loggedInUserID }: PlaidProps) {
                 <Button onClick={() => getToken()}>GET TOKEN</Button>
                 <Button onClick={() => open()}>LINK PLAID ACCOUNT</Button>
                 <Button onClick={() => sendTokenForExchange()}>exchange token</Button>
+                <Button onClick={() => updateHoldings()}>UPDATE HOLDINGS</Button>
                 <p>Here is the public token we received: {public_token}</p>
             </div>
         </>
