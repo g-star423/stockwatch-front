@@ -29,3 +29,7 @@ header p {
   text-align: end;
   margin-right: 2em;
 }
+
+Button {
+  align-self: center;
+}

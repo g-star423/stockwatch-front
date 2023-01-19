@@ -20,7 +20,7 @@ function PlaidLinkComponent({ loggedInUserID }: PlaidProps) {
 
     const config: PlaidLinkOptions = {
         onSuccess: (public_token, metadata) => {
-            setPublicToken(publicToken)
+            setPublicToken(public_token)
             sendTokenForExchange()
         },
         onExit: (err, metadata) => { },
@@ -29,6 +29,11 @@ function PlaidLinkComponent({ loggedInUserID }: PlaidProps) {
         //required for OAuth; if not using OAuth, set to null or omit:
         // receivedRedirectUri: window.location.href,
     };
+    useEffect(() => {
+        if (publicToken) {
+            sendTokenForExchange()
+        }
+    }, [publicToken])
     const request = {
         "token_status": "blank, requesting token",
         "user_id": loggedInUserID
@@ -59,8 +64,8 @@ function PlaidLinkComponent({ loggedInUserID }: PlaidProps) {
         }
         axios.post('https://boiling-crag-00382.herokuapp.com/api/exchangetoken', exchangeRequest).then(
             (response) => {
-                console.log("response from sending token for exchange" + response.data);
                 updateHoldings()
+                setPlaidSuccess(true)
             }
         ).catch(
             (error) => {
@@ -87,11 +92,12 @@ function PlaidLinkComponent({ loggedInUserID }: PlaidProps) {
     return (
         <>
             <div>
-                <Button onClick={() => { getToken() }}>GET TOKEN</Button>
-                {/* <Button onClick={() => open()}>LINK PLAID ACCOUNT</Button> */}
+                <h3></h3>
+                <Button onClick={() => { getToken() }}>LINK INVESTMENT ACCOUNTS</Button>
+                {/* <Button onClick={() => open()}>LINK PLAID ACCOUNT</Button>LEAVING THESE FOR FUTURE TESTING */}
                 {/* <Button onClick={() => sendTokenForExchange()}>exchange token</Button> */}
                 <Button onClick={() => updateHoldings()}>REFRESH HOLDINGS FROM PLAID</Button>
-                <p>Here is the public token we received: {publicToken}</p>
+                {/* <p>Here is the public token we received: {publicToken}</p> */}
                 {plaidSuccess ? <p>Account connected! Please UPDATE HOLDINGS.</p> : null}
             </div>
         </>

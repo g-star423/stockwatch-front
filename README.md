@@ -12,3 +12,6 @@ Steps:
 2. This token will get sent to front-end, and fed into Plaid's plugin - the user will then complete signup. Plaid will send client a token, that then gets sent back down to my back-end.
 3. Create API endpoint for public token to be passed to. (including data structure)
 4. Have this endpoint, upon receipt, send token back to plaid, where data structure gets updated with persistant token from Plaid.
+
+1/18/2023
+Today spent lots of time diagnosing the "open()" function in the Plaid component.
