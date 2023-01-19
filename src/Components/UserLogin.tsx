@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import axios from "axios"
-import { Button, Input, Space } from 'antd';
+import { Button, Input, Space, Form } from 'antd';
 import Password from "antd/es/input/Password";
 
 interface UserLoginProps {
@@ -22,7 +22,7 @@ function UserLogin({ setLoggedInUserID, setLoggedInUsername, setLogin }: UserLog
         setPassword(event.target.value)
     }
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-        event.preventDefault()
+        // event.preventDefault() no longer  need this with antd form
         console.log(`Submitted form, username: ${username}, password: ${password}`);
         axios.put('https://boiling-crag-00382.herokuapp.com/api/useraccount/login',
             {
@@ -48,14 +48,20 @@ function UserLogin({ setLoggedInUserID, setLoggedInUsername, setLogin }: UserLog
     return (
         <div className="form-div">
             <h4>Login:</h4>
-            <form onSubmit={(event) => handleSubmit(event)}>
-                <Space direction='vertical'>
+            <Form labelCol={{ span: 5 }} onFinish={(event) => handleSubmit(event)}>
+                {/* <form onSubmit={(event) => handleSubmit(event)}> */}
+                <Form.Item label='Username' name="username">
                     <Input type="text" placeholder="username" onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleUsername(event)} />
+                </Form.Item>
+                <Form.Item label='Password' name="password">
                     <Password placeholder="password" onChange={(event: React.ChangeEvent<HTMLInputElement>) => handlePassword(event)} />
-                </Space>
-                <Button type="primary" htmlType="submit">SUBMIT</Button><Button onClick={() => setLogin(false)}>CANCEL</Button>
+                </Form.Item>
+                <Form.Item>
+                    <Button type="primary" htmlType="submit">SUBMIT</Button><Button onClick={() => setLogin(false)}>CANCEL</Button>
+                </Form.Item>
                 {invalidLogin ? <p>invalid login</p> : null}
-            </form>
+                {/* </form> */}
+            </Form>
         </div>
     )
 }
