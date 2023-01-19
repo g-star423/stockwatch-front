@@ -1,7 +1,6 @@
 import { useState } from "react"
 import axios from "axios"
 import { Button, Form, Input } from 'antd';
-import Password from "antd/es/input/Password";
 
 interface NewUserProps {
     setLoggedInUsername: Function
@@ -27,9 +26,9 @@ function NewUser({ setLoggedInUserID, setLoggedInUsername, setSignup }: NewUserP
     }
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-        event.preventDefault()
+        // event.preventDefault() on longer needed with antd form
         console.log(`Submitted form, username: ${username}, password: ${password}`);
-        if (password != passwordCheck) {
+        if (password !== passwordCheck) {
             setPasswordsDontMatch(true)
         } else {
             axios.post('https://boiling-crag-00382.herokuapp.com/api/useraccount', {
@@ -39,11 +38,12 @@ function NewUser({ setLoggedInUserID, setLoggedInUsername, setSignup }: NewUserP
                 (response) => {
                     setLoggedInUsername(response.data.email)
                     setLoggedInUserID(response.data.id)
+                    setSignup(false)
                 }
             ).catch(
                 (error) => {
                     console.log(error);
-                    if (error.response.status == 400) {
+                    if (error.response.status === 400) {
                         setUsernameTaken(true)
                     }
                 }
@@ -54,15 +54,25 @@ function NewUser({ setLoggedInUserID, setLoggedInUsername, setSignup }: NewUserP
     return (
         <div className="form-div">
             <h4>New User</h4>
-            <form onSubmit={(event) => handleSubmit(event)}>
+            <Form labelCol={{ span: 5 }} onFinish={(event) => handleSubmit(event)}>
+                {/* <form onSubmit={(event) => handleSubmit(event)}> */}
                 {/* <Form.Item label="Username" name='username' /> */}
-                <Input name="username" type="text" placeholder="username" onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleUsername(event)} />
-                <Input.Password placeholder="password" onChange={(event: React.ChangeEvent<HTMLInputElement>) => handlePassword(event)} />
-                <Input.Password placeholder="confirm password" onChange={(event: React.ChangeEvent<HTMLInputElement>) => handlePasswordCheck(event)} />
-                <Button type="primary" htmlType="submit">SUBMIT</Button><Button onClick={() => setSignup(false)}>CANCEL</Button>
+                <Form.Item label='Username' name="username">
+                    <Input name="username" type="text" placeholder="username" onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleUsername(event)} />
+                </Form.Item>
+                <Form.Item label='Password' name="password">
+                    <Input.Password placeholder="password" onChange={(event: React.ChangeEvent<HTMLInputElement>) => handlePassword(event)} />
+                </Form.Item>
+                <Form.Item label='Confirm' name="confirm_password">
+                    <Input.Password placeholder="confirm password" onChange={(event: React.ChangeEvent<HTMLInputElement>) => handlePasswordCheck(event)} />
+                </Form.Item>
+                <Form.Item>
+                    <Button type="primary" htmlType="submit">SUBMIT</Button><Button onClick={() => setSignup(false)}>CANCEL</Button>
+                </Form.Item>
                 {passwordsDontMatch ? <p>your passwords don't match</p> : null}
                 {usernameTaken ? <p>username is taken</p> : null}
-            </form>
+                {/* </form> */}
+            </Form>
         </div>
     )
 

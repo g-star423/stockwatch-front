@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import { Button, Input, Modal } from 'antd';
+import { Button, Form, Input, Modal } from 'antd';
 
 interface AddHoldingProps {
     loggedInUserID: number | undefined
@@ -39,7 +39,7 @@ function AddHolding({ loggedInUserID, getUserHoldings }: AddHoldingProps) {
     }
 
     function handleAddHolding(event: React.FormEvent<HTMLFormElement>) {
-        event.preventDefault()
+        // event.preventDefault()
         setIsModalOpen(false)
         axios.post('https://boiling-crag-00382.herokuapp.com/api/holdings', {
             'stock_name': stockName,
@@ -61,17 +61,28 @@ function AddHolding({ loggedInUserID, getUserHoldings }: AddHoldingProps) {
 
     return (
         <>
-            <Button type="primary" onClick={showModal}>
-                ADD HOLDING
-            </Button>
+            <div className='button-div'>
+                <Button type="primary" onClick={showModal}>
+                    ADD HOLDING
+                </Button>
+            </div>
             <Modal destroyOnClose={true} title="Add New Holding" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} okText='DONE' footer={null}>
                 <div className='form-div'>
-                    <form onSubmit={(event) => handleAddHolding(event)}>
-                        <Input type="text" placeholder="stock name" onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleStockName(event)} />
-                        <Input type="text" placeholder="stock ticker" onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleStockTicker(event)} />
-                        <Input type="number" placeholder="number of shares" onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleStockShares(event)} />
-                        <Button type='primary' htmlType='submit'>SUBMIT</Button>
-                    </form>
+                    <Form labelCol={{ span: 8 }} onFinish={(event) => handleAddHolding(event)}>
+                        <Form.Item label='Stock Name' name="stock_name">
+                            <Input type="text" placeholder="stock name" onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleStockName(event)} />
+                        </Form.Item>
+                        <Form.Item label='Stock Ticker' name="stock_ticker">
+                            <Input type="text" placeholder="stock ticker" onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleStockTicker(event)} />
+                        </Form.Item>
+                        <Form.Item label='Number of Shares' name="number_of_shares">
+                            <Input type="number" placeholder="number of shares" onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleStockShares(event)} />
+                        </Form.Item>
+                        <Form.Item>
+                            <Button type='primary' htmlType='submit'>SUBMIT</Button>
+                        </Form.Item>
+
+                    </Form>
                 </div>
             </Modal>
         </>

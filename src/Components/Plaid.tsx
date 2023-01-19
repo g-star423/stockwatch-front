@@ -91,8 +91,10 @@ function PlaidLinkComponent({ loggedInUserID }: PlaidProps) {
 
     return (
         <>
-            <div>
-                <h3></h3>
+            <div className="button-div">
+                <h3>Link your investment accounts:</h3>
+            </div>
+            <div className="button-div">
                 <Button onClick={() => { getToken() }}>LINK INVESTMENT ACCOUNTS</Button>
                 {/* <Button onClick={() => open()}>LINK PLAID ACCOUNT</Button>LEAVING THESE FOR FUTURE TESTING */}
                 {/* <Button onClick={() => sendTokenForExchange()}>exchange token</Button> */}

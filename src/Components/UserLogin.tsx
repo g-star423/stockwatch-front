@@ -33,6 +33,7 @@ function UserLogin({ setLoggedInUserID, setLoggedInUsername, setLogin }: UserLog
                     if (response.data.email !== undefined) {
                         setLoggedInUsername(response.data.email)
                         setLoggedInUserID(response.data.id)
+                        setLogin(false)
                     } else {
                         setInvalidLogin(true)
                     }

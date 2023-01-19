@@ -62,10 +62,16 @@ function Holdings({ loggedInUserID }: HoldingsProps) {
         }
     ]
 
+    const [gotHoldings, setGotHoldings] = useState<boolean>(false)
+
     function getUserHoldings() {
         axios.get('https://boiling-crag-00382.herokuapp.com/api/userholdings/' + loggedInUserID).then(
             (response) => {
                 setDataSource(response.data)
+                setGotHoldings(true)
+                setTimeout(() => {
+                    setGotHoldings(false)
+                }, 5000)
             }
         ).catch(
             (error) => {
@@ -80,8 +86,11 @@ function Holdings({ loggedInUserID }: HoldingsProps) {
 
     return (
         <>
-            <div className="table-div">
+            <div className='button-div'>
                 <Button onClick={getUserHoldings}>REFRESH HOLDINGS</Button>
+                {gotHoldings ? <p>Holdings updated!</p> : null}
+            </div>
+            <div className="table-div">
                 <Table<Holding> columns={columns} dataSource={dataSource} pagination={false} />
             </div>
             <AddHolding loggedInUserID={loggedInUserID} getUserHoldings={getUserHoldings} />

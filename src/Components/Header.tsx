@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+
 
 interface HeaderProps {
     loggedInUsername: string | undefined
@@ -9,9 +9,9 @@ function Header({ loggedInUsername, loggedInUserID }: HeaderProps) {
 
     return (
         <header>
-            <img src="https://i.imgur.com/QdQ14Fg.png" />
-            <div>
-                {!loggedInUsername ? <p>Please Log in.</p> : <p>Welcome {loggedInUsername}, User Number {loggedInUserID}</p>}
+            <img src="https://i.imgur.com/QdQ14Fg.png" alt="stock watch logo" />
+            <div className="button-div">
+                {!loggedInUsername ? null : <p>Welcome {loggedInUsername}, User Number {loggedInUserID}</p>}
             </div>
         </header>
     )
