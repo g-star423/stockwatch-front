@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import axios from "axios"
-import { Button, Input } from 'antd';
+import { Button, Input, Space } from 'antd';
 import Password from "antd/es/input/Password";
 
 interface UserLoginProps {
@@ -49,8 +49,10 @@ function UserLogin({ setLoggedInUserID, setLoggedInUsername, setLogin }: UserLog
         <div className="form-div">
             <h4>Login:</h4>
             <form onSubmit={(event) => handleSubmit(event)}>
-                <Input type="text" placeholder="username" onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleUsername(event)} />
-                <Password placeholder="password" onChange={(event: React.ChangeEvent<HTMLInputElement>) => handlePassword(event)} />
+                <Space direction='vertical'>
+                    <Input type="text" placeholder="username" onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleUsername(event)} />
+                    <Password placeholder="password" onChange={(event: React.ChangeEvent<HTMLInputElement>) => handlePassword(event)} />
+                </Space>
                 <Button type="primary" htmlType="submit">SUBMIT</Button><Button onClick={() => setLogin(false)}>CANCEL</Button>
                 {invalidLogin ? <p>invalid login</p> : null}
             </form>
