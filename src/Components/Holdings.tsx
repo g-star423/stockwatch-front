@@ -32,11 +32,11 @@ function Holdings({ loggedInUserID }: HoldingsProps) {
 
     const [dataSource, setDataSource] = useState<Holding[]>([])
     const columns = [ // I would not use antd again purely because of this table design.
-        {
-            title: 'id',
-            dataIndex: 'id',
-            key: 'id'
-        },
+        // {
+        //     title: 'id',
+        //     dataIndex: 'id',
+        //     key: 'id'
+        // },
         {
             title: 'Stock Name',
             dataIndex: 'stock_name',
@@ -62,19 +62,25 @@ function Holdings({ loggedInUserID }: HoldingsProps) {
         }
     ]
 
-    const [gotHoldings, setGotHoldings] = useState<boolean>(false)
+    const [gotHoldings, setGotHoldings] = useState<boolean>(false) // helps display message to let user know it was successful
+    const [holdingsLoading, setHoldingsLoading] = useState(false)
 
     function getUserHoldings() {
+        setHoldingsLoading(true)
         axios.get('https://boiling-crag-00382.herokuapp.com/api/userholdings/' + loggedInUserID).then(
             (response) => {
                 setDataSource(response.data)
                 setGotHoldings(true)
+                setTimeout(() => {
+                    setHoldingsLoading(false) // usually loads quite fast, so letting loading look like it's happening for at least .5 seconds
+                }, 500)
                 setTimeout(() => {
                     setGotHoldings(false)
                 }, 5000)
             }
         ).catch(
             (error) => {
+                setHoldingsLoading(false)
                 console.log(error);
             }
         )
@@ -87,7 +93,7 @@ function Holdings({ loggedInUserID }: HoldingsProps) {
     return (
         <>
             <div className='button-div'>
-                <Button onClick={getUserHoldings}>REFRESH HOLDINGS</Button>
+                <Button loading={holdingsLoading} onClick={getUserHoldings}>REFRESH HOLDINGS</Button>
                 {gotHoldings ? <p>Holdings updated!</p> : null}
             </div>
             <div className="table-div">

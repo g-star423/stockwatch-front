@@ -14,6 +14,7 @@ function UserLogin({ setLoggedInUserID, setLoggedInUsername, setLogin }: UserLog
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [invalidLogin, setInvalidLogin] = useState(false)
+    const [loginLoading, setLoginLoading] = useState(false)
 
     function handleUsername(event: React.ChangeEvent<HTMLInputElement>) {
         setUsername(event.target.value)
@@ -24,12 +25,14 @@ function UserLogin({ setLoggedInUserID, setLoggedInUsername, setLogin }: UserLog
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         // event.preventDefault() no longer  need this with antd form
         console.log(`Submitted form, username: ${username}, password: ${password}`);
+        setLoginLoading(true)
         axios.put('https://boiling-crag-00382.herokuapp.com/api/useraccount/login',
             {
                 'email': username,
                 'password': password
             }).then(
                 (response) => {
+                    setLoginLoading(false)
                     if (response.data.email !== undefined) {
                         setLoggedInUsername(response.data.email)
                         setLoggedInUserID(response.data.id)
@@ -40,6 +43,7 @@ function UserLogin({ setLoggedInUserID, setLoggedInUsername, setLogin }: UserLog
                 }
             ).catch(
                 (error) => {
+                    setLoginLoading(false)
                     console.log(error);
                     setInvalidLogin(true)
                 }
@@ -58,7 +62,7 @@ function UserLogin({ setLoggedInUserID, setLoggedInUsername, setLogin }: UserLog
                     <Password placeholder="password" onChange={(event: React.ChangeEvent<HTMLInputElement>) => handlePassword(event)} />
                 </Form.Item>
                 <Form.Item>
-                    <Button type="primary" htmlType="submit">SUBMIT</Button><Button onClick={() => setLogin(false)}>CANCEL</Button>
+                    <Button loading={loginLoading} type="primary" htmlType="submit">SUBMIT</Button><Button onClick={() => setLogin(false)}>CANCEL</Button>
                 </Form.Item>
                 {invalidLogin ? <p>invalid login</p> : null}
                 {/* </form> */}

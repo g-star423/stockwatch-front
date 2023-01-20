@@ -6,6 +6,7 @@ import NewUser from './Components/NewUser';
 import Holdings from './Components/Holdings';
 import PlaidLinkComponent from './Components/Plaid';
 import AddRequest from './Components/AddRequest';
+import Requests from './Components/Requests';
 import { Button, Space } from 'antd';
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
       {loggedInUsername ? <Holdings loggedInUserID={loggedInUserID} /> : null}
       {loggedInUsername ? <PlaidLinkComponent loggedInUserID={loggedInUserID} /> : null}
       <AddRequest loggedInUserID={loggedInUserID}></AddRequest>
+      <Requests></Requests>
     </div>
   );
 }

@@ -73,18 +73,22 @@ function PlaidLinkComponent({ loggedInUserID }: PlaidProps) {
             }
         )
     }
+
+    const [loadingHoldings, setLoadingHoldings] = useState(false)
+
     function updateHoldings() { // this function asks the server to refresh the client's holdings, which deletes all old holdings and pulls in fresh holdings from plaid
+        setLoadingHoldings(true)
         const updateRequest = {
             "user_id": loggedInUserID
         }
         axios.post('https://boiling-crag-00382.herokuapp.com/api/updateholdings', updateRequest).then(
             (response) => {
-
+                setLoadingHoldings(false)
             }
         ).catch(
             (error) => {
                 console.log(error);
-
+                setLoadingHoldings(false)
             }
         )
     }
@@ -98,7 +102,7 @@ function PlaidLinkComponent({ loggedInUserID }: PlaidProps) {
                 <Button onClick={() => { getToken() }}>LINK INVESTMENT ACCOUNTS</Button>
                 {/* <Button onClick={() => open()}>LINK PLAID ACCOUNT</Button>LEAVING THESE FOR FUTURE TESTING */}
                 {/* <Button onClick={() => sendTokenForExchange()}>exchange token</Button> */}
-                <Button onClick={() => updateHoldings()}>REFRESH HOLDINGS FROM PLAID</Button>
+                <Button loading={loadingHoldings} onClick={() => updateHoldings()}>REFRESH HOLDINGS FROM PLAID</Button>
                 {/* <p>Here is the public token we received: {publicToken}</p> */}
                 {plaidSuccess ? <p>Account connected! Please UPDATE HOLDINGS.</p> : null}
             </div>
