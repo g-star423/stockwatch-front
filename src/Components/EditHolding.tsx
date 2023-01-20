@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Button, Input, Modal } from 'antd';
+import { Button, Form, Input, Modal } from 'antd';
 import { useState, useEffect } from 'react';
 
 interface Holding {
@@ -33,7 +33,7 @@ function EditHolding({ isModalOpen, setIsModalOpen, holdingEditing }: EditHoldin
     const [stockShares, setStockShares] = useState<number>()
 
     useEffect(() => {
-        setStockName(holdingEditing?.stock_name)
+        setStockName(holdingEditing?.stock_name) // these will update the prefilled values any time the holding we are editing changes. They may be undefined, hence the ?
         setStockTicker(holdingEditing?.stock_ticker)
         setStockShares(holdingEditing?.number_of_shares)
     }, [holdingEditing])
@@ -49,7 +49,7 @@ function EditHolding({ isModalOpen, setIsModalOpen, holdingEditing }: EditHoldin
     }
 
     function handleEditHolding(event: React.FormEvent<HTMLFormElement>) {
-        event.preventDefault()
+        // event.preventDefault()
         setIsModalOpen(false)
         axios.put('https://boiling-crag-00382.herokuapp.com/api/holdings/' + holdingEditing?.id, {
             "stock_name": stockName,
@@ -85,13 +85,23 @@ function EditHolding({ isModalOpen, setIsModalOpen, holdingEditing }: EditHoldin
         <>
             <Modal title="Edit Holding" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} okText='DONE'>
                 <div className='form-div'>
-                    <form onSubmit={(event) => handleEditHolding(event)}>
-                        <Input type="text" value={stockName} onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleStockName(event)} />
-                        <Input type="text" value={stockTicker} onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleStockTicker(event)} />
-                        <Input type="number" value={stockShares} onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleStockShares(event)} />
-                        <Button type='primary' htmlType='submit'>SUBMIT</Button>
-                        <Button type='primary' danger={true} onClick={handleDelete}>DELETE</Button>
-                    </form>
+                    {/* <form onSubmit={(event) => handleEditHolding(event)}> */}
+                    <Form labelCol={{ span: 5 }} onFinish={(event) => handleEditHolding(event)}>
+                        <Form.Item label="Stock name">
+                            <Input type="text" value={stockName} onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleStockName(event)} />
+                        </Form.Item>
+                        <Form.Item label="Stock ticker">
+                            <Input type="text" value={stockTicker} onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleStockTicker(event)} />
+                        </Form.Item>
+                        <Form.Item label="Numnber of shares">
+                            <Input type="number" value={stockShares} onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleStockShares(event)} />
+                        </Form.Item>
+                        <Form.Item>
+                            <Button type='primary' htmlType='submit'>SUBMIT</Button>
+                            <Button type='primary' danger={true} onClick={handleDelete}>DELETE</Button>
+                        </Form.Item>
+                    </Form>
+                    {/* </form> */}
                 </div>
             </Modal>
         </>
