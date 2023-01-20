@@ -4,9 +4,10 @@ import { Button, Form, Input, Modal, Switch } from 'antd';
 
 interface AddRequestProps {
     loggedInUserID: number | undefined
+    getUserRequests: Function
 }
 
-function AddRequest({ loggedInUserID }: AddRequestProps) {
+function AddRequest({ loggedInUserID, getUserRequests }: AddRequestProps) {
     // from ant.design documentation
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -74,6 +75,7 @@ function AddRequest({ loggedInUserID }: AddRequestProps) {
             'user_id': loggedInUserID,
         }).then(
             (response) => {
+                getUserRequests()
                 console.log(response.data);
             }
         ).catch(

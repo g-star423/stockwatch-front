@@ -83,7 +83,7 @@ function EditHolding({ isModalOpen, setIsModalOpen, holdingEditing }: EditHoldin
 
     return (
         <>
-            <Modal title="Edit Holding" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} okText='DONE'>
+            <Modal title="Edit Holding" open={isModalOpen} onCancel={handleCancel} footer={null}>
                 <div className='form-div'>
                     {/* <form onSubmit={(event) => handleEditHolding(event)}> */}
                     <Form labelCol={{ span: 5 }} onFinish={(event) => handleEditHolding(event)}>

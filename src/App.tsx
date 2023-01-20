@@ -35,8 +35,7 @@ function App() {
       {signup ? <NewUser setLoggedInUsername={setLoggedInUsername} setLoggedInUserID={setLoggedInUserID} setSignup={setSignup} /> : null}
       {loggedInUsername ? <Holdings loggedInUserID={loggedInUserID} /> : null}
       {loggedInUsername ? <PlaidLinkComponent loggedInUserID={loggedInUserID} /> : null}
-      <AddRequest loggedInUserID={loggedInUserID}></AddRequest>
-      <Requests></Requests>
+      <Requests loggedInUserID={loggedInUserID}></Requests>
     </div>
   );
 }

@@ -97,7 +97,7 @@ function Holdings({ loggedInUserID }: HoldingsProps) {
                 {gotHoldings ? <p>Holdings updated!</p> : null}
             </div>
             <div className="table-div">
-                <Table<Holding> columns={columns} dataSource={dataSource} pagination={false} />
+                <Table<Holding> columns={columns} dataSource={dataSource} pagination={false} key="id" />
             </div>
             <AddHolding loggedInUserID={loggedInUserID} getUserHoldings={getUserHoldings} />
             <EditHolding isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} holdingEditing={holdingEditing} />
