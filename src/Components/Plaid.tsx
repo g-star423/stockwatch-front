@@ -17,6 +17,7 @@ function PlaidLinkComponent({ loggedInUserID }: PlaidProps) {
     const [plaidLinkToken, setPlaidLinkToken] = useState<string | null>(null)
     const [publicToken, setPublicToken] = useState<string | null>(null)
     const [plaidSuccess, setPlaidSuccess] = useState(false)
+    const [plaidUpdateSuccess, setPlaidUpdateSuccess] = useState(false)
 
     const config: PlaidLinkOptions = {
         onSuccess: (public_token, metadata) => {
@@ -84,6 +85,7 @@ function PlaidLinkComponent({ loggedInUserID }: PlaidProps) {
         axios.post('https://boiling-crag-00382.herokuapp.com/api/updateholdings', updateRequest).then(
             (response) => {
                 setLoadingHoldings(false)
+                setPlaidUpdateSuccess(true)
             }
         ).catch(
             (error) => {
@@ -104,7 +106,8 @@ function PlaidLinkComponent({ loggedInUserID }: PlaidProps) {
                 {/* <Button onClick={() => sendTokenForExchange()}>exchange token</Button> */}
                 <Button loading={loadingHoldings} onClick={() => updateHoldings()}>REFRESH HOLDINGS FROM PLAID</Button>
                 {/* <p>Here is the public token we received: {publicToken}</p> */}
-                {plaidSuccess ? <p>Account connected! Please UPDATE HOLDINGS.</p> : null}
+                {plaidSuccess ? <p>Account connected! Please REFRESH HOLDINGS.</p> : null}
+                {plaidUpdateSuccess ? <p>Plaid retrieved holdings from institution! Please REFRESH HOLDINGS.</p> : null}
             </div>
         </>
     )
