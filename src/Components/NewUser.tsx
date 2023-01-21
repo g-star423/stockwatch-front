@@ -6,9 +6,10 @@ interface NewUserProps {
     setLoggedInUsername: Function
     setLoggedInUserID: Function
     setSignup: Function
+    setView: Function
 }
 
-function NewUser({ setLoggedInUserID, setLoggedInUsername, setSignup }: NewUserProps) {
+function NewUser({ setLoggedInUserID, setLoggedInUsername, setSignup, setView }: NewUserProps) {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [passwordCheck, setPasswordCheck] = useState('')
@@ -39,6 +40,7 @@ function NewUser({ setLoggedInUserID, setLoggedInUsername, setSignup }: NewUserP
                     setLoggedInUsername(response.data.email)
                     setLoggedInUserID(response.data.id)
                     setSignup(false)
+                    setView("holdings")
                 }
             ).catch(
                 (error) => {

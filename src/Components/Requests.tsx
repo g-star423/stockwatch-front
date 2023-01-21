@@ -46,6 +46,10 @@ function Requests({ loggedInUserID }: RequestsProps) {
         )
     }
 
+    useEffect(() => {
+        getUserRequests()
+    }, [isModalOpen])
+
 
     const columns = [
         {
@@ -93,7 +97,9 @@ function Requests({ loggedInUserID }: RequestsProps) {
 
     return (
         <>
-            <Button onClick={getUserRequests}>GET REQUESTS</Button>
+            <div className='button-div'>
+                <Button onClick={getUserRequests}>GET REQUESTS</Button>
+            </div>
             <div className="table-div">
                 <Table<TradeRequest> columns={columns} dataSource={dataSource} pagination={false} key="id" />
             </div>

@@ -7,10 +7,11 @@ interface UserLoginProps {
     setLoggedInUsername: Function
     setLoggedInUserID: Function
     setLogin: Function
+    setView: Function
 }
 
 
-function UserLogin({ setLoggedInUserID, setLoggedInUsername, setLogin }: UserLoginProps) {
+function UserLogin({ setLoggedInUserID, setLoggedInUsername, setLogin, setView }: UserLoginProps) {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [invalidLogin, setInvalidLogin] = useState(false)
@@ -37,6 +38,7 @@ function UserLogin({ setLoggedInUserID, setLoggedInUsername, setLogin }: UserLog
                         setLoggedInUsername(response.data.email)
                         setLoggedInUserID(response.data.id)
                         setLogin(false)
+                        setView("holdings")
                     } else {
                         setInvalidLogin(true)
                     }
