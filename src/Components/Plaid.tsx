@@ -109,6 +109,9 @@ function PlaidLinkComponent({ loggedInUserID }: PlaidProps) {
                 {plaidSuccess ? <p>Account connected! Please REFRESH HOLDINGS.</p> : null}
                 {plaidUpdateSuccess ? <p>Plaid retrieved holdings from institution! Please REFRESH HOLDINGS.</p> : null}
             </div>
+            <div className='button-div'>
+                <h3>DEV NOTE: Please do not input your bank account information. Please select any bank from Plaid's sandbox, username = "user_good", password = "pass_good". 1234 for any other confirmations.</h3>
+            </div>
         </>
     )
 }

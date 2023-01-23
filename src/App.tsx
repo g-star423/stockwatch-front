@@ -40,9 +40,7 @@ function App() {
       {view === 'holdings' ? <Holdings loggedInUserID={loggedInUserID} /> : null}
       {view === 'holdings' ? <PlaidLinkComponent loggedInUserID={loggedInUserID} /> : null}
       {view === 'requests' ? <Requests loggedInUserID={loggedInUserID} /> : null}
-      <div className='button-div'>
-        <h3>DEV NOTE: Please do not input your bank account information. Please select any bank from Plaid's sandbox, username = "user_good", password = "pass_good". 1234 for any other confirmations.</h3>
-      </div>
+
     </div>
   );
 }
